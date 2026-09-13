@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Parallax — Persistent Operational Agent
 
 Parallax is a **single-agent operational system**: one agent reasons over grounded
@@ -225,3 +226,73 @@ curl -X POST http://localhost:8000/api/webhooks/jira -d "{\"event_type\":\"issue
 > collected evidence, mutations require approval, results require read-back
 > verification, and completion requires proof. If a worker dies, verified work
 > is never repeated — and an already-verified objective is never executed twice.
+=======
+# Parallax
+
+Parallax is a locally runnable engineering workflow platform. The Next.js
+frontend submits missions to a FastAPI control plane, an ARQ worker gathers
+context and coordinates planning, and the TypeScript Agent service provides
+structured reasoning. PostgreSQL stores application and audit data, Redis
+backs the worker queue, and Prometheus collects API metrics.
+
+## Local stack
+
+Requirements: Docker Desktop with Compose v2. No vendor credentials are
+required in the default mock/fallback configuration.
+
+```bash
+cp .env.example .env
+docker compose up --build -d
+docker compose ps
+```
+
+Open the services at:
+
+- Frontend: http://localhost:3000
+- FastAPI/OpenAPI: http://localhost:8000/docs
+- Agent health: http://localhost:8100/health
+- Prometheus: http://localhost:9090
+
+Check readiness and logs:
+
+```bash
+curl -fsS http://localhost:8000/ready
+curl -fsS http://localhost:8100/health
+curl -fsS http://localhost:3000/login
+docker compose logs --tail=100 api worker agent frontend
+```
+
+Stop the stack with `docker compose down`. Add `-v` only when you intentionally
+want to delete local PostgreSQL, Redis, and Prometheus data.
+
+## Development checks
+
+```bash
+npm ci
+npm run api:check
+npm run typecheck
+npm run lint
+npm test
+npm run build
+
+(cd packages/agent-core && npm ci && npm run typecheck && npm test && npm run build)
+
+ruff check parallax_backend tests scripts migrations
+ruff format --check parallax_backend tests scripts migrations
+mypy parallax_backend scripts
+pytest tests
+alembic check
+```
+
+The API contract used by the frontend is [docs/openapi.json](docs/openapi.json),
+with a human-readable endpoint guide in [docs/API.md](docs/API.md).
+
+## Configuration
+
+Keep `.env` local and secret. The committed `.env.example` contains names and
+safe placeholders only. `INTEGRATION_MODE=mock` prevents writes to GitHub,
+Jira, Notion, and Slack. `AGENT_MODE=fallback` uses deterministic planning;
+Docker Compose overrides it to `service` and safely falls back if the Agent or
+model is unavailable. Configure real vendor credentials only in a secret
+manager or an untracked `.env`.
+>>>>>>> edf9c19 (final)

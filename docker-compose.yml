@@ -2,14 +2,18 @@ name: parallax
 
 services:
   api:
-    build: .
-    command: ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    build:
+      context: .
+      target: backend-base
+    command: ["sh", "-c", "alembic upgrade head && uvicorn parallax_backend.main:app --host 0.0.0.0 --port 8000"]
     env_file:
       - path: .env
         required: false
     environment:
       DATABASE_URL: postgresql+asyncpg://parallax:parallax@postgres:5432/parallax
       REDIS_URL: redis://redis:6379/0
+      AGENT_SERVICE_URL: http://agent:8100
+      AGENT_MODE: service
     ports:
       - "8000:8000"
     healthcheck:
@@ -23,21 +27,57 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      agent:
+        condition: service_healthy
     restart: unless-stopped
 
   worker:
-    build: .
-    command: ["arq", "app.worker.WorkerSettings"]
+    build:
+      context: .
+      target: backend-base
+    command: ["arq", "parallax_backend.worker.WorkerSettings"]
     env_file:
       - path: .env
         required: false
     environment:
       DATABASE_URL: postgresql+asyncpg://parallax:parallax@postgres:5432/parallax
       REDIS_URL: redis://redis:6379/0
+      AGENT_SERVICE_URL: http://agent:8100
+      AGENT_MODE: service
     depends_on:
       postgres:
         condition: service_healthy
       redis:
+        condition: service_healthy
+      agent:
+        condition: service_healthy
+    restart: unless-stopped
+
+  agent:
+    build:
+      context: .
+      target: agent-runner
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      AGENT_PORT: 8100
+    ports:
+      - "8100:8100"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      target: frontend-runner
+    environment:
+      PARALLAX_API_URL: http://api:8000
+      PARALLAX_DISABLE_AUTH: "false"
+      PARALLAX_DISABLE_RBAC: "false"
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
         condition: service_healthy
     restart: unless-stopped
 
@@ -85,4 +125,3 @@ volumes:
   postgres_data:
   redis_data:
   prometheus_data:
-

@@ -1,4 +1,4 @@
-from app.config import Settings
+from parallax_backend.config import Settings
 
 
 def test_cors_origins_are_normalized() -> None:

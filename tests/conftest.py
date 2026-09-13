@@ -5,9 +5,9 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from app.database import get_session
-from app.main import app
-from app.models import Base
+from parallax_backend.database import get_session
+from parallax_backend.main import app
+from parallax_backend.models import Base
 
 
 @pytest.fixture

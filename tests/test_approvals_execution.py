@@ -6,17 +6,17 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
-from app.integrations.contracts import AdapterError
-from app.models import (
+from parallax_backend.integrations.contracts import AdapterError
+from parallax_backend.models import (
     ExecutionRecord,
     IntegrationProvider,
     Mission,
     MissionStatus,
     VerificationRecord,
 )
-from app.services import execution as execution_service
-from app.services.execution import execute_mission
-from app.worker import prepare_mission
+from parallax_backend.services import execution as execution_service
+from parallax_backend.services.execution import execute_mission
+from parallax_backend.worker import prepare_mission
 
 OWNER = {
     "email": "approval-owner@example.com",

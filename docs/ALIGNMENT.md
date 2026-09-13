@@ -2,7 +2,7 @@
 
 ## Sources reviewed
 
-- Shared Drive root prototype (`app/`, root README, dependencies)
+- Shared Drive root prototype (`parallax_backend/`, root README, dependencies)
 - Shared Drive current `parallax-mvp/` backend and frontend
 - Local PRD, agent flow, backend instructions, design, pipeline, and roadmap
 - User decisions: manual mission input, local/self-hosted runtime, four integrations, and separate backend/agent teams

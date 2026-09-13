@@ -5,15 +5,15 @@ from typing import cast
 import httpx
 import pytest
 
-from app.agent.contracts import (
+from parallax_backend.agent.contracts import (
     AgentContextRequest,
     AgentContextResponse,
     AgentEvidence,
     validate_agent_evidence,
 )
-from app.agent.gateway import AgentGateway
-from app.config import Settings
-from app.models import IntegrationProvider
+from parallax_backend.agent.gateway import AgentGateway
+from parallax_backend.config import Settings
+from parallax_backend.models import IntegrationProvider
 
 
 def request_contract() -> AgentContextRequest:

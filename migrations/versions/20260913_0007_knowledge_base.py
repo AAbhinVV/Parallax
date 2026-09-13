@@ -85,9 +85,7 @@ def upgrade() -> None:
         sa.Column("confidence", sa.Float(), nullable=True),
         *timestamps(),
     )
-    op.create_index(
-        "ix_knowledge_facts_workspace_id", "knowledge_facts", ["workspace_id"]
-    )
+    op.create_index("ix_knowledge_facts_workspace_id", "knowledge_facts", ["workspace_id"])
     op.create_index(
         "ix_knowledge_facts_mission_status", "knowledge_facts", ["mission_id", "status"]
     )

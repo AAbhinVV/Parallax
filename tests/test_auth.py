@@ -4,8 +4,8 @@ import uuid
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
-from app.models import Integration, User, WorkspaceMembership, WorkspaceRole
-from app.security import hash_password
+from parallax_backend.models import Integration, User, WorkspaceMembership, WorkspaceRole
+from parallax_backend.security import hash_password
 
 OWNER = {
     "email": "owner@example.com",

@@ -6,9 +6,9 @@ from sqlalchemy import select
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.config import settings  # noqa: E402
-from app.database import session_factory  # noqa: E402
-from app.models import (  # noqa: E402
+from parallax_backend.config import settings  # noqa: E402
+from parallax_backend.database import session_factory  # noqa: E402
+from parallax_backend.models import (  # noqa: E402
     Integration,
     IntegrationProvider,
     IntegrationStatus,
@@ -18,7 +18,7 @@ from app.models import (  # noqa: E402
     WorkspaceMembership,
     WorkspaceRole,
 )
-from app.security import hash_password  # noqa: E402
+from parallax_backend.security import hash_password  # noqa: E402
 
 
 async def seed() -> None:

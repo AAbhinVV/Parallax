@@ -5,7 +5,7 @@ from typing import Any
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
-from app.models import (
+from parallax_backend.models import (
     AgentAssessment,
     AuditEvent,
     ContextPack,
@@ -14,7 +14,7 @@ from app.models import (
     MissionStep,
     OutboxJob,
 )
-from app.worker import dispatch_outbox, prepare_mission
+from parallax_backend.worker import dispatch_outbox, prepare_mission
 
 OWNER = {
     "email": "mission-owner@example.com",

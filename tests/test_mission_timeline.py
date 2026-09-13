@@ -6,8 +6,8 @@ import asyncio
 
 from fastapi.testclient import TestClient
 
-from app.services.execution import execute_mission
-from app.worker import prepare_mission
+from parallax_backend.services.execution import execute_mission
+from parallax_backend.worker import prepare_mission
 
 OWNER = {
     "email": "timeline-owner@example.com",
@@ -55,9 +55,7 @@ def test_timeline_merges_all_mission_events(client: TestClient) -> None:
     bundle = client.post(f"/api/missions/{mission_id}/approval", headers=headers).json()
     client.post(f"/api/approvals/{bundle['id']}/approve", headers=headers, json={})
     assert (
-        asyncio.run(
-            execute_mission({"session_factory": factory, "redis": FakeRedis()}, mission_id)
-        )
+        asyncio.run(execute_mission({"session_factory": factory, "redis": FakeRedis()}, mission_id))
         == "completed"
     )
 
@@ -108,9 +106,7 @@ def test_timeline_only_includes_own_mission_events(client: TestClient) -> None:
     ).json()["id"]
 
     first_timeline = client.get(f"/api/missions/{first_mission}/timeline", headers=headers).json()
-    second_timeline = client.get(
-        f"/api/missions/{second_mission}/timeline", headers=headers
-    ).json()
+    second_timeline = client.get(f"/api/missions/{second_mission}/timeline", headers=headers).json()
     assert len(first_timeline) == 1
     assert len(second_timeline) == 1
     assert first_timeline[0]["id"] != second_timeline[0]["id"]
