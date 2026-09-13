@@ -2,7 +2,7 @@
 
 ```text
 Parallax/
-├── app/
+├── parallax_backend/
 │   ├── main.py                 # FastAPI application and middleware
 │   ├── config.py               # Validated environment configuration
 │   ├── database.py             # Async PostgreSQL sessions
@@ -43,7 +43,7 @@ Parallax/
 └── docker-compose.yml
 ```
 
-Future business modules are added under `app/modules/`: missions, integrations, context packs, proposals, policy, approvals, execution, verification, audit, and dashboard.
+Future business modules are added under `parallax_backend/modules/`: missions, integrations, context packs, proposals, policy, approvals, execution, verification, audit, and dashboard.
 
 The API handles short request/response work. The worker handles context collection, agent-service calls, retries, external execution, and verification. PostgreSQL is the system of record; Redis is only for jobs, locks, rate limits, and temporary state.
 

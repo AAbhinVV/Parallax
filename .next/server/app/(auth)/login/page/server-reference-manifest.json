@@ -1,0 +1,27 @@
+{
+  "node": {
+    "6023d5ef69ba8d62f912da03dc4e347a812c057186": {
+      "workers": {
+        "app/(auth)/login/page": {
+          "moduleId": 18697,
+          "async": false,
+          "codeHash": null
+        }
+      },
+      "exportedName": "loginAction",
+      "filename": "src/app/actions/auth.ts"
+    },
+    "601c770b6217a6bea51c63fbeccfee445d9bc41372": {
+      "workers": {
+        "app/(auth)/login/page": {
+          "moduleId": 18697,
+          "async": false,
+          "codeHash": null
+        }
+      },
+      "exportedName": "registerAction",
+      "filename": "src/app/actions/auth.ts"
+    }
+  },
+  "edge": {}
+}

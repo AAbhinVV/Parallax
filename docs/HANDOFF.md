@@ -135,7 +135,7 @@ Workspace endpoints:
 ```bash
 alembic upgrade head
 ruff check .
-mypy app scripts/seed_demo.py
+mypy parallax_backend scripts/seed_demo.py
 pytest
 python scripts/export_openapi.py
 docker compose up --build -d

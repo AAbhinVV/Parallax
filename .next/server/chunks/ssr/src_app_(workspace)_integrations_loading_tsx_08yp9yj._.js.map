@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../src/app/%28workspace%29/integrations/loading.tsx"],"sourcesContent":["import { PageSkeleton } from \"@/components/page-skeleton\";\nexport default function Loading() { return <PageSkeleton />; }\n"],"names":["Loading"],"mappings":"uDAAA,EAAA,EAAA,CAAA,CAAA,wBACe,SAASA,EAAY,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,EAAA,YAAY,CAAA,CAAA,EAAK"}

@@ -5,9 +5,9 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-from app.config import settings
-from app.integrations.contracts import AdapterError, ApprovedWriteContext
-from app.integrations.mock import MockJiraAdapter
+from parallax_backend.config import settings
+from parallax_backend.integrations.contracts import AdapterError, ApprovedWriteContext
+from parallax_backend.integrations.mock import MockJiraAdapter
 from scripts.backup_local import pg_dump_url
 
 OWNER = {

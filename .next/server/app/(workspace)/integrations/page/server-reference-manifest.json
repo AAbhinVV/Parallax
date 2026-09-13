@@ -1,0 +1,38 @@
+{
+  "node": {
+    "0097362326e6f4ae091bfe4c75f136b3156f061dbc": {
+      "workers": {
+        "app/(workspace)/integrations/page": {
+          "moduleId": 5372,
+          "async": false,
+          "codeHash": null
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/app/actions/auth.ts"
+    },
+    "70df3b60aff4e697597ce297566be4445f5e794feb": {
+      "workers": {
+        "app/(workspace)/integrations/page": {
+          "moduleId": 5372,
+          "async": false,
+          "codeHash": null
+        }
+      },
+      "exportedName": "updateRoleAction",
+      "filename": "src/app/actions/workspace.ts"
+    },
+    "70fffe15914bff8d912331965c90350a6c99a3b433": {
+      "workers": {
+        "app/(workspace)/integrations/page": {
+          "moduleId": 5372,
+          "async": false,
+          "codeHash": null
+        }
+      },
+      "exportedName": "checkIntegrationAction",
+      "filename": "src/app/actions/workspace.ts"
+    }
+  },
+  "edge": {}
+}

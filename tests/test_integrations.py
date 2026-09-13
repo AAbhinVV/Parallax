@@ -5,18 +5,18 @@ import httpx
 import pytest
 from fastapi.testclient import TestClient
 
-from app.config import settings
-from app.integrations.contracts import AdapterError, ApprovedWriteContext
-from app.integrations.github import GitHubAdapter
-from app.integrations.jira import JiraAdapter
-from app.integrations.notion import NotionAdapter
-from app.integrations.registry import (
+from parallax_backend.config import settings
+from parallax_backend.integrations.contracts import AdapterError, ApprovedWriteContext
+from parallax_backend.integrations.github import GitHubAdapter
+from parallax_backend.integrations.jira import JiraAdapter
+from parallax_backend.integrations.notion import NotionAdapter
+from parallax_backend.integrations.registry import (
     build_github_adapter,
     build_jira_adapter,
     build_notion_adapter,
     build_slack_adapter,
 )
-from app.integrations.slack import SlackAdapter
+from parallax_backend.integrations.slack import SlackAdapter
 
 OWNER = {
     "email": "integration-owner@example.com",

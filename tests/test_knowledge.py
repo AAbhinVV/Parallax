@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import uuid
 
-from app.models import (
+from parallax_backend.models import (
     KnowledgeFactKind,
     KnowledgeFactStatus,
     KnowledgeSource,
@@ -14,7 +14,7 @@ from app.models import (
     User,
     Workspace,
 )
-from app.services.knowledge import (
+from parallax_backend.services.knowledge import (
     build_mission_context,
     kb_metrics,
     mark_fact_conflicted,
@@ -203,5 +203,3 @@ def test_context_pack_caps_facts_per_source(client) -> None:
             await session.commit()
 
     asyncio.run(scenario())
-
-

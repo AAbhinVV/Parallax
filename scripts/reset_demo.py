@@ -7,9 +7,9 @@ from sqlalchemy import delete
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.config import settings  # noqa: E402
-from app.database import session_factory  # noqa: E402
-from app.models import Workspace  # noqa: E402
+from parallax_backend.config import settings  # noqa: E402
+from parallax_backend.database import session_factory  # noqa: E402
+from parallax_backend.models import Workspace  # noqa: E402
 
 
 async def reset(slug: str) -> None:

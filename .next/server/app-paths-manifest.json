@@ -1,0 +1,21 @@
+{
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
+  "/(workspace)/activity/page": "app/(workspace)/activity/page.js",
+  "/(workspace)/analytics/page": "app/(workspace)/analytics/page.js",
+  "/(workspace)/dashboard/page": "app/(workspace)/dashboard/page.js",
+  "/(workspace)/integrations/page": "app/(workspace)/integrations/page.js",
+  "/(workspace)/missions/[id]/page": "app/(workspace)/missions/[id]/page.js",
+  "/(workspace)/missions/new/page": "app/(workspace)/missions/new/page.js",
+  "/(workspace)/missions/page": "app/(workspace)/missions/page.js",
+  "/(workspace)/projects/page": "app/(workspace)/projects/page.js",
+  "/(workspace)/settings/page": "app/(workspace)/settings/page.js",
+  "/(workspace)/team/page": "app/(workspace)/team/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/session/refresh/route": "app/api/session/refresh/route.js",
+  "/api/ui/dashboard/live/route": "app/api/ui/dashboard/live/route.js",
+  "/api/ui/missions/[missionId]/live/route": "app/api/ui/missions/[missionId]/live/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js"
+}

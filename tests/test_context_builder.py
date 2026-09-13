@@ -11,7 +11,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import (
+from parallax_backend.models import (
     ActionProposal,
     AgentAssessment,
     AgentRun,
@@ -29,7 +29,7 @@ from app.models import (
     VerificationRecord,
     Workspace,
 )
-from app.services.knowledge import build_mission_context, record_fact
+from parallax_backend.services.knowledge import build_mission_context, record_fact
 
 PROMPT = "Synchronize PAY-18 and notify #payments about the release"
 
@@ -228,8 +228,7 @@ def test_status_summary_approval_and_enriched_actions(client: TestClient) -> Non
                 {"provider": "jira", "operation": "issue.create", "external_id": "PAY-19"}
             ]
             remaining = {
-                (item["provider"], item["operation"]): item
-                for item in summary["remaining_work"]
+                (item["provider"], item["operation"]): item for item in summary["remaining_work"]
             }
             assert set(remaining) == {("slack", "message.post"), ("notion", "page.append")}
             assert remaining[("slack", "message.post")]["status"] == "failed"
@@ -288,9 +287,7 @@ def test_failed_action_reappears_as_pending_after_retry_reset(client: TestClient
             )
             await session.commit()
             # Simulate the retry endpoint's reset (executions.py resets failed rows).
-            execution = (
-                await session.execute(select(ExecutionRecord))
-            ).scalar_one()
+            execution = (await session.execute(select(ExecutionRecord))).scalar_one()
             execution.status = "pending"
             execution.attempts = 0
             execution.last_error = None

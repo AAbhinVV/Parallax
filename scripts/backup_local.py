@@ -7,7 +7,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.config import settings
+from parallax_backend.config import settings
 
 
 def pg_dump_url(database_url: str) -> str:

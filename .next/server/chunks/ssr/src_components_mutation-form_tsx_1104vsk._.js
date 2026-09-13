@@ -1,0 +1,3 @@
+module.exports=[71805,a=>{"use strict";var b=a.i(87924),c=a.i(72131),d=a.i(99570);a.s(["MutationForm",0,function({action:a,label:e,pendingLabel:f="Working…",variant:g="default",className:h,children:i}){let[j,k,l]=(0,c.useActionState)(a,{});return(0,b.jsxs)("form",{action:k,className:h,children:[i,(0,b.jsx)(d.Button,{type:"submit",variant:g,className:"w-full",disabled:l,children:l?f:e}),j.error&&(0,b.jsxs)("p",{role:"alert",className:"mt-2 text-sm text-destructive",children:[j.error,j.correlationId&&(0,b.jsxs)("span",{className:"mt-1 block font-mono text-xs",children:["Reference ",j.correlationId]})]})]})}])}];
+
+//# sourceMappingURL=src_components_mutation-form_tsx_1104vsk._.js.map

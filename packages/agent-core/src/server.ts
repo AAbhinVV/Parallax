@@ -11,8 +11,9 @@ import {
   type MissionResponse,
   type MissionStatus,
 } from "./types/mission.js";
+import type { AgentStateType } from "./graph/state.js";
 
-const PORT = Number(process.env.AGENT_PORT ?? "4010");
+const PORT = Number(process.env.AGENT_PORT ?? "8100");
 
 /**
  * Bearer check for the backend contract. Open when no key is configured
@@ -102,7 +103,7 @@ function buildMissionInput(
   };
 }
 
-type MissionStateLike = Record<string, any>;
+type MissionStateLike = AgentStateType;
 
 function deriveStatus(
   state: MissionStateLike,
