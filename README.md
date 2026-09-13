@@ -128,21 +128,7 @@ cd ..\..
 copy .env.example .env            # cp .env.example .env on macOS/Linux
 ```
 
-Fill in `.env`:
 
-```env
-GEMINI_API_KEY=...                # reasoning model
-JIRA_BASE_URL=https://YOUR-DOMAIN.atlassian.net
-JIRA_EMAIL=...
-JIRA_API_TOKEN=...
-SLACK_BOT_TOKEN=xoxb-...
-NOTION_API_KEY=...
-GITHUB_TOKEN=...                  # read-only context source
-
-# Agent Core service (must match the agent-core port)
-AGENT_MODE=service
-AGENT_SERVICE_URL=http://localhost:4010
-```
 
 ### Database
 
