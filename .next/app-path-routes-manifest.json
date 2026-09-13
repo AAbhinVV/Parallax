@@ -1,0 +1,21 @@
+{
+  "/(auth)/login/page": "/login",
+  "/(auth)/register/page": "/register",
+  "/(workspace)/activity/page": "/activity",
+  "/(workspace)/analytics/page": "/analytics",
+  "/(workspace)/dashboard/page": "/dashboard",
+  "/(workspace)/integrations/page": "/integrations",
+  "/(workspace)/missions/[id]/page": "/missions/[id]",
+  "/(workspace)/missions/new/page": "/missions/new",
+  "/(workspace)/missions/page": "/missions",
+  "/(workspace)/projects/page": "/projects",
+  "/(workspace)/settings/page": "/settings",
+  "/(workspace)/team/page": "/team",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/session/refresh/route": "/api/session/refresh",
+  "/api/ui/dashboard/live/route": "/api/ui/dashboard/live",
+  "/api/ui/missions/[missionId]/live/route": "/api/ui/missions/[missionId]/live",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}

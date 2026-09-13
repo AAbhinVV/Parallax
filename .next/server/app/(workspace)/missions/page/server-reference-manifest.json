@@ -1,0 +1,16 @@
+{
+  "node": {
+    "0097362326e6f4ae091bfe4c75f136b3156f061dbc": {
+      "workers": {
+        "app/(workspace)/missions/page": {
+          "moduleId": 65737,
+          "async": false,
+          "codeHash": null
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/app/actions/auth.ts"
+    }
+  },
+  "edge": {}
+}
