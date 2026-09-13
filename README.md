@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Parallax — Persistent Operational Agent
 
 Parallax is a **single-agent operational system**: one agent reasons over grounded
@@ -295,4 +295,3 @@ Jira, Notion, and Slack. `AGENT_MODE=fallback` uses deterministic planning;
 Docker Compose overrides it to `service` and safely falls back if the Agent or
 model is unavailable. Configure real vendor credentials only in a secret
 manager or an untracked `.env`.
->>>>>>> edf9c19 (final)
