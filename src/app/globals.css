@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Parallax light-mode tokens from DESIGN (1).md. */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 1rem;
+  --background: #F6F8FA;
+  --foreground: #111827;
+  --card: #FFFFFF;
+  --card-foreground: #111827;
+  --popover: #FFFFFF;
+  --popover-foreground: #111827;
+  --primary: #3652C9;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEF1F5;
+  --secondary-foreground: #5B6472;
+  --muted: #EEF1F5;
+  --muted-foreground: #5B6472;
+  --accent: #E7ECFB;
+  --accent-foreground: #3652C9;
+  --destructive: #B4463A;
+  --border: #E4E8ED;
+  --input: #D2D8E0;
+  --ring: #3652C9;
+  --surface-raised: #FFFFFF;
+  --surface-inset: #EEF1F5;
+  --sidebar: #FBFCFD;
+  --sidebar-foreground: #111827;
+  --sidebar-muted: #5B6472;
+  --sidebar-border: #E4E8ED;
+  --sidebar-accent: #E7ECFB;
+  --success: #1A7F5A;
+  --success-soft: #E7F5EE;
+  --warning: #9A6B12;
+  --warning-soft: #FBF1DD;
+  --info: #2F6FBF;
+  --info-soft: #E9F1FB;
+  --danger-soft: #FBE9E7;
+}
+
+@theme inline {
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-inset: var(--surface-inset);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-danger-soft: var(--danger-soft);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: var(--radius);
+  --radius-xl: 24px;
+}
+
+* { border-color: var(--border); }
+
+html,
+body {
+  min-height: 100%;
+  overflow-x: clip;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.84375rem;
+  line-height: 1.5;
+}
+
+button,
+a,
+input,
+textarea,
+select { -webkit-tap-highlight-color: transparent; }
+
+button,
+a {
+  transition-duration: 150ms;
+  transition-property: color, background-color, border-color, opacity, box-shadow;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Shared operator typography and geometry across every API-backed route. */
+main, [data-workspace-content] { font-variant-numeric: tabular-nums; }
+[data-workspace-content] > main, [data-workspace-content] > div { max-width: 1440px; }
+h1 { font-size: 22px !important; line-height: 28px !important; text-wrap: balance; }
+:where([data-workspace-content] h2) { font-size: 15px; line-height: 22px; }
+.lucide { stroke-width: 1.5; }
+[data-slot="card"] { box-shadow: none; }
+[data-slot="button"]:active:not(:disabled) { transform: translateY(1px); }
+[data-slot="input"], [data-slot="textarea"] { background: var(--surface-raised); }
+[data-slot="skeleton"] { pointer-events: none; }
+[data-slot="input"] { min-height: 40px; border-radius: 8px; }
+[data-slot="button"] { border-radius: 8px; }
+[data-slot="button"]:focus-visible, [data-slot="input"]:focus-visible, [data-slot="textarea"]:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; box-shadow: none; }

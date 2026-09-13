@@ -1,0 +1,10 @@
+{
+  "scannedAt": "2026-09-13",
+  "framework": "Next.js 16 App Router",
+  "fontStack": "Geist Sans + Geist Mono",
+  "palette": "Custom OKLCH semantic tokens",
+  "motion": "CSS transitions only",
+  "spacing": "4px base rhythm",
+  "theme": "Light Control Room"
+}
+
