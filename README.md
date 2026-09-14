@@ -1,5 +1,5 @@
 
-# Parallax — Persistent Operational Agent 
+# Parallax — Persistent Operational Agent  
 
 Parallax is a **single-agent operational system**: one agent reasons over grounded
 cross-tool context, proposes actions, and executes a durable multi-step workflow
