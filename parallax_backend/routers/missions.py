@@ -33,17 +33,13 @@ from parallax_backend.schemas import (
     MissionRead,
     ReviewerCandidateRead,
 )
-<<<<<<< HEAD:app/routers/missions.py
-from app.services.missions import mission_to_read, record_mission_event, transition_mission
-from app.services.resolution import resolve_existing_objective
-from app.services.task_identity import task_fingerprint
-=======
 from parallax_backend.services.missions import (
     mission_to_read,
     record_mission_event,
     transition_mission,
 )
->>>>>>> edf9c19 (final):parallax_backend/routers/missions.py
+from parallax_backend.services.resolution import resolve_existing_objective
+from parallax_backend.services.task_identity import task_fingerprint
 
 router = APIRouter(prefix="/api/missions", tags=["missions"])
 ERRORS: dict[int | str, dict[str, Any]] = {

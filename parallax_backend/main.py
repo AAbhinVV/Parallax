@@ -9,22 +9,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from starlette.middleware.base import RequestResponseEndpoint
 
-<<<<<<< HEAD:app/main.py
-from app.config import settings
-from app.database import close_database
-from app.logging import configure_logging
-from app.metrics import HTTP_DURATION, HTTP_FAILURES, HTTP_REQUESTS
-from app.routers.analytics import router as analytics_router
-from app.routers.approvals import router as approvals_router
-from app.routers.auth import router as auth_router
-from app.routers.dashboard import router as dashboard_router
-from app.routers.executions import router as executions_router
-from app.routers.health import router as health_router
-from app.routers.integrations import router as integrations_router
-from app.routers.missions import router as missions_router
-from app.routers.webhooks import router as webhooks_router
-from app.routers.workspaces import router as workspaces_router
-=======
 from parallax_backend.config import settings
 from parallax_backend.database import close_database
 from parallax_backend.logging import configure_logging
@@ -37,8 +21,8 @@ from parallax_backend.routers.executions import router as executions_router
 from parallax_backend.routers.health import router as health_router
 from parallax_backend.routers.integrations import router as integrations_router
 from parallax_backend.routers.missions import router as missions_router
+from parallax_backend.routers.webhooks import router as webhooks_router
 from parallax_backend.routers.workspaces import router as workspaces_router
->>>>>>> edf9c19 (final):parallax_backend/main.py
 
 configure_logging()
 logger = structlog.get_logger()

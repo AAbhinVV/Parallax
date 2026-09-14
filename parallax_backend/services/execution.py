@@ -28,11 +28,9 @@ from parallax_backend.models import (
     MissionStatus,
     VerificationRecord,
 )
-<<<<<<< HEAD:app/services/execution.py
-from app.services.completion import build_completion_proof
-from app.services.knowledge import knowledge_source_for, record_fact
-from app.services.missions import record_mission_event, transition_mission
-from app.services.mission_runtime import (
+from parallax_backend.services.completion import build_completion_proof
+from parallax_backend.services.knowledge import knowledge_source_for, record_fact
+from parallax_backend.services.mission_runtime import (
     claim_mission,
     get_runnable_actions,
     mark_step_started,
@@ -41,10 +39,7 @@ from app.services.mission_runtime import (
     sync_step_from_execution,
     upsert_action_step,
 )
-=======
-from parallax_backend.services.knowledge import knowledge_source_for, record_fact
 from parallax_backend.services.missions import record_mission_event, transition_mission
->>>>>>> edf9c19 (final):parallax_backend/services/execution.py
 
 
 async def _execute(action: ActionProposal, approval: ApprovedWriteContext) -> ExternalRecord:
@@ -151,9 +146,7 @@ async def execute_mission(ctx: dict[str, Any], mission_id: str) -> str:
             # K4.1: the runtime decides which actions still need work —
             # verified actions are skipped, maxed-out failures wait for an
             # explicit retry, everything else runs.
-            action_ids = [
-                action.id for action in await get_runnable_actions(session, mission)
-            ]
+            action_ids = [action.id for action in await get_runnable_actions(session, mission)]
 
         for action_id in action_ids:
             async with factory() as session:

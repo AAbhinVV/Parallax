@@ -26,8 +26,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.integrations.contracts import AdapterError
-from app.models import (
+from parallax_backend.integrations.contracts import AdapterError
+from parallax_backend.models import (
     ActionProposal,
     ApprovalBundle,
     ExecutionRecord,
@@ -35,7 +35,7 @@ from app.models import (
     MissionStatus,
     MissionStep,
 )
-from app.services.missions import record_mission_event
+from parallax_backend.services.missions import record_mission_event
 
 LEASE_TTL_SECONDS = 60
 MAX_ATTEMPTS = 3
@@ -61,7 +61,7 @@ def is_retryable_error(exc: BaseException) -> bool:
     """
     if isinstance(exc, AdapterError):
         return exc.retryable
-    if isinstance(exc, (httpx.TimeoutException, httpx.ConnectError)):
+    if isinstance(exc, httpx.TimeoutException | httpx.ConnectError):
         return True
     if isinstance(exc, httpx.HTTPStatusError):
         return exc.response.status_code in {429, 500, 502, 503, 504}

@@ -27,6 +27,7 @@ def timestamps() -> list[sa.Column]:
 
 
 def upgrade() -> None:
+    op.create_index("ix_knowledge_facts_mission_id", "knowledge_facts", ["mission_id"])
     op.add_column(
         "missions",
         sa.Column("task_fingerprint", sa.String(length=64), nullable=True),
@@ -64,3 +65,4 @@ def downgrade() -> None:
     op.drop_table("mission_completion_proofs")
     op.drop_index("ix_missions_task_fingerprint", table_name="missions")
     op.drop_column("missions", "task_fingerprint")
+    op.drop_index("ix_knowledge_facts_mission_id", table_name="knowledge_facts")

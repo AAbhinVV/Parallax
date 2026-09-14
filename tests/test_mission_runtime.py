@@ -11,8 +11,8 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
-from app.integrations.contracts import AdapterError
-from app.models import (
+from parallax_backend.integrations.contracts import AdapterError
+from parallax_backend.models import (
     ActionProposal,
     ApprovalBundle,
     ExecutionRecord,
@@ -21,16 +21,16 @@ from app.models import (
     MissionStatus,
     MissionStep,
 )
-from app.services import execution as execution_service
-from app.services.execution import execute_mission
-from app.services.mission_runtime import (
+from parallax_backend.services import execution as execution_service
+from parallax_backend.services.execution import execute_mission
+from parallax_backend.services.mission_runtime import (
     claim_mission,
     get_runnable_actions,
     recover_expired_missions,
     release_lease,
     renew_lease,
 )
-from app.worker import prepare_mission
+from parallax_backend.worker import prepare_mission
 
 OWNER = {
     "email": "runtime-owner@example.com",
@@ -263,9 +263,7 @@ def test_step_state_survives_failure_and_resume(
     headers = auth(client)
     mission_id = prepared_mission(client, headers)
     bundle = client.post(f"/api/missions/{mission_id}/approval", headers=headers).json()
-    approved = client.post(
-        f"/api/approvals/{bundle['id']}/approve", headers=headers, json={}
-    )
+    approved = client.post(f"/api/approvals/{bundle['id']}/approve", headers=headers, json={})
     assert approved.status_code == 200
     factory = client.test_session_factory  # type: ignore[attr-defined]
     original_execute = execution_service._execute
@@ -344,9 +342,7 @@ def test_step_state_survives_failure_and_resume(
                 slack_step.attempts,
             )
 
-    jira_status, jira_attempts_after, slack_status, slack_attempts_after = asyncio.run(
-        read_final()
-    )
+    jira_status, jira_attempts_after, slack_status, slack_attempts_after = asyncio.run(read_final())
     assert jira_status == "verified"
     assert jira_attempts_after == jira_attempts_before
     assert slack_status == "verified"
@@ -359,9 +355,7 @@ def test_recovered_mission_can_be_claimed_and_completed(
     headers = auth(client)
     mission_id = prepared_mission(client, headers)
     bundle = client.post(f"/api/missions/{mission_id}/approval", headers=headers).json()
-    approved = client.post(
-        f"/api/approvals/{bundle['id']}/approve", headers=headers, json={}
-    )
+    approved = client.post(f"/api/approvals/{bundle['id']}/approve", headers=headers, json={})
     assert approved.status_code == 200
     factory = client.test_session_factory  # type: ignore[attr-defined]
 

@@ -74,6 +74,7 @@ services:
       PARALLAX_API_URL: http://api:8000
       PARALLAX_DISABLE_AUTH: "false"
       PARALLAX_DISABLE_RBAC: "false"
+      PARALLAX_COOKIE_SECURE: "false"
     ports:
       - "3000:3000"
     depends_on:

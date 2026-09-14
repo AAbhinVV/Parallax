@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-FROM python:3.12-slim
-=======
 # syntax=docker/dockerfile:1.7
 
 # =============================================================================
@@ -15,7 +12,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Install the complete dependency graph needed by `next build`.
 FROM frontend-base AS frontend-dependencies
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --no-audit --no-fund
+RUN --mount=type=cache,id=parallax-frontend-npm,target=/root/.npm,sharing=locked npm ci --no-audit --no-fund
 
 # Compile the production Next.js application.
 FROM frontend-base AS frontend-builder
@@ -26,7 +23,7 @@ RUN npm run build
 # Keep only packages required by `next start` in the runtime image.
 FROM frontend-base AS frontend-production-dependencies
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
+RUN --mount=type=cache,id=parallax-frontend-production-npm,target=/root/.npm,sharing=locked npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
 
 FROM node:${NODE_VERSION}-alpine AS frontend-runner
 WORKDIR /app/frontend
@@ -55,7 +52,7 @@ CMD ["npm", "start"]
 FROM node:${NODE_VERSION}-alpine AS agent-builder
 WORKDIR /app/agent
 COPY packages/agent-core/package.json packages/agent-core/package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --no-audit --no-fund
+RUN --mount=type=cache,id=parallax-agent-npm,target=/root/.npm,sharing=locked npm ci --no-audit --no-fund
 COPY packages/agent-core/tsconfig.json ./
 COPY packages/agent-core/src ./src
 RUN npm run build
@@ -65,7 +62,7 @@ WORKDIR /app/agent
 ENV NODE_ENV=production \
     AGENT_PORT=8100
 COPY packages/agent-core/package.json packages/agent-core/package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
+RUN --mount=type=cache,id=parallax-agent-production-npm,target=/root/.npm,sharing=locked npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
 COPY --from=agent-builder --chown=node:node /app/agent/dist ./dist
 USER node
 EXPOSE 8100
@@ -77,7 +74,6 @@ CMD ["node", "dist/server.js"]
 # BACKEND BUILD (Python/FastAPI)
 # =============================================================================
 FROM python:3.12-slim AS backend-base
->>>>>>> edf9c19 (final)
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -86,16 +82,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --default-timeout=120 --retries=5 -r requirements.txt
 
 COPY alembic.ini ./
 COPY migrations ./migrations
 COPY parallax_backend ./parallax_backend
 
 EXPOSE 8000
-<<<<<<< HEAD
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-
-=======
 CMD ["uvicorn", "parallax_backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
->>>>>>> edf9c19 (final)

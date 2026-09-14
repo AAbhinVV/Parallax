@@ -4,12 +4,11 @@ from __future__ import annotations
 
 import asyncio
 import uuid
-from typing import Any
 
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
-from app.models import (
+from parallax_backend.models import (
     KnowledgeFactKind,
     KnowledgeSource,
     Mission,
@@ -19,8 +18,8 @@ from app.models import (
     User,
     Workspace,
 )
-from app.services.event_router import route_event
-from app.services.knowledge import record_fact
+from parallax_backend.services.event_router import route_event
+from parallax_backend.services.knowledge import record_fact
 
 
 async def _make_workspace(session) -> tuple[Workspace, User, Project]:
@@ -93,11 +92,7 @@ def test_event_wakes_waiting_mission_and_queues_execution(client: TestClient) ->
             assert refreshed.status == MissionStatus.RUNNING
 
             jobs = (
-                (
-                    await session.execute(
-                        select(OutboxJob).where(OutboxJob.mission_id == mission.id)
-                    )
-                )
+                (await session.execute(select(OutboxJob).where(OutboxJob.mission_id == mission.id)))
                 .scalars()
                 .all()
             )

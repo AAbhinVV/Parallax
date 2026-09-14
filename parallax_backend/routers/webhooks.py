@@ -4,11 +4,12 @@ from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.config import settings
-from app.database import get_session
-from app.services.event_router import route_event
+from parallax_backend.config import settings
+from parallax_backend.database import get_session
+from parallax_backend.services.event_router import route_event
 
 router = APIRouter(prefix="/api/webhooks", tags=["webhooks"])
+
 
 class WebhookPayload(BaseModel):
     event_type: str = Field(min_length=1, max_length=120)

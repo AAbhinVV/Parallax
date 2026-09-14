@@ -30,6 +30,9 @@ htmlcov/
 dist/
 build/
 *.tsbuildinfo
+.next/
+legacy_backend_app/
+packages/backend-legacy/
 
 # ----------------------------------------------------------
 # Logs
@@ -52,4 +55,3 @@ Thumbs.db
 # ----------------------------------------------------------
 *.db
 *.sqlite3
-

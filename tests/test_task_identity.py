@@ -5,12 +5,11 @@ from __future__ import annotations
 import asyncio
 import uuid
 from datetime import UTC, datetime
-from typing import Any
 
 from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
-from app.models import (
+from parallax_backend.models import (
     ActionProposal,
     ExecutionRecord,
     IntegrationProvider,
@@ -22,9 +21,9 @@ from app.models import (
     VerificationRecord,
     Workspace,
 )
-from app.services.completion import build_completion_proof
-from app.services.resolution import resolve_existing_objective
-from app.services.task_identity import task_fingerprint
+from parallax_backend.services.completion import build_completion_proof
+from parallax_backend.services.resolution import resolve_existing_objective
+from parallax_backend.services.task_identity import task_fingerprint
 
 
 async def _make_workspace(session) -> tuple[Workspace, User, Project]:
@@ -124,9 +123,7 @@ def test_resolution_completed_requires_verified_proof(client) -> None:
             )
 
             # Completed without a proof: memory without evidence is not truth.
-            unverified = await resolve_existing_objective(
-                session, workspace.id, project.id, prompt
-            )
+            unverified = await resolve_existing_objective(session, workspace.id, project.id, prompt)
             assert unverified.decision == "resume"
 
             proof = MissionCompletionProof(
@@ -148,9 +145,7 @@ def test_resolution_completed_requires_verified_proof(client) -> None:
             session.add(proof)
             await session.flush()
 
-            verified = await resolve_existing_objective(
-                session, workspace.id, project.id, prompt
-            )
+            verified = await resolve_existing_objective(session, workspace.id, project.id, prompt)
             assert verified.decision == "completed"
             assert verified.prior_mission is not None
             assert verified.prior_mission.id == prior.id

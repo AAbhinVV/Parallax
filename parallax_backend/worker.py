@@ -27,13 +27,6 @@ from parallax_backend.models import (
     MissionStep,
     OutboxJob,
 )
-<<<<<<< HEAD:app/worker.py
-from app.services.context import collect_context
-from app.services.execution import execute_mission
-from app.services.knowledge import build_mission_context, knowledge_source_for, record_fact
-from app.services.missions import record_mission_event, transition_mission
-from app.services.mission_runtime import recover_expired_missions
-=======
 from parallax_backend.services.context import collect_context
 from parallax_backend.services.execution import execute_mission
 from parallax_backend.services.knowledge import (
@@ -41,8 +34,8 @@ from parallax_backend.services.knowledge import (
     knowledge_source_for,
     record_fact,
 )
+from parallax_backend.services.mission_runtime import recover_expired_missions
 from parallax_backend.services.missions import record_mission_event, transition_mission
->>>>>>> edf9c19 (final):parallax_backend/worker.py
 
 configure_logging()
 logger = structlog.get_logger()

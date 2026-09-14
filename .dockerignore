@@ -8,4 +8,6 @@ __pycache__
 htmlcov
 node_modules
 dist
-
+.next
+legacy_backend_app
+packages/backend-legacy

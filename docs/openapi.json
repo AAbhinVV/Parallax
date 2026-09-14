@@ -85,6 +85,7 @@
           "analytics"
         ],
         "summary": "Get the complete mission timeline",
+        "description": "Merged, chronological mission timeline.\n\nEvery durable trace of what happened inside one mission, in order:\nstatus transitions, knowledge-base facts, action executions,\nverifications, and approval decisions.",
         "operationId": "mission_timeline_api_missions__mission_id__timeline_get",
         "security": [
           {
@@ -2654,6 +2655,104 @@
         }
       }
     },
+    "/api/missions/{mission_id}/wait": {
+      "post": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Park a mission until an external event arrives",
+        "description": "K4.3: a mission waiting for an external change consumes no worker.\n\nThe mission parks in WAITING_FOR_EVENT; the event router wakes it when\na matching external event arrives.",
+        "operationId": "wait_for_event_api_missions__mission_id__wait_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "mission_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Mission Id"
+            }
+          },
+          {
+            "name": "X-Workspace-ID",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissionRead"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "description": "Request validation failed"
+          }
+        }
+      }
+    },
     "/api/dashboard/stats": {
       "get": {
         "tags": [
@@ -3195,6 +3294,76 @@
               }
             },
             "description": "Bad Gateway"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/webhooks/{provider}": {
+      "post": {
+        "tags": [
+          "webhooks"
+        ],
+        "summary": "Receive an external event and wake affected missions",
+        "description": "External events (GitHub/Jira/Slack/Notion) wake affected missions.\n\nOpen when no webhook secret is configured (local/demo); enforced when\nWEBHOOK_SECRET is set.",
+        "operationId": "receive_webhook_api_webhooks__provider__post",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Provider"
+            }
+          },
+          {
+            "name": "X-Webhook-Secret",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Webhook-Secret"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Receive Webhook Api Webhooks  Provider  Post"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -4434,6 +4603,7 @@
           "context_collected",
           "waiting_for_approval",
           "running",
+          "waiting_for_event",
           "completed",
           "blocked",
           "rejected",
@@ -4925,6 +5095,37 @@
           "checked_at"
         ],
         "title": "VerificationRead"
+      },
+      "WebhookPayload": {
+        "properties": {
+          "event_type": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Event Type"
+          },
+          "external_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "External Id"
+          },
+          "payload": {
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "event_type"
+        ],
+        "title": "WebhookPayload"
       },
       "WorkspaceRead": {
         "properties": {

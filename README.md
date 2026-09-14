@@ -226,7 +226,6 @@ curl -X POST http://localhost:8000/api/webhooks/jira -d "{\"event_type\":\"issue
 > collected evidence, mutations require approval, results require read-back
 > verification, and completion requires proof. If a worker dies, verified work
 > is never repeated — and an already-verified objective is never executed twice.
-=======
 # Parallax
 
 Parallax is a locally runnable engineering workflow platform. The Next.js

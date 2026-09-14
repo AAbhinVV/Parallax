@@ -20,9 +20,9 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.models import Mission, MissionCompletionProof, MissionStatus
-from app.services.completion import verified_proof_for
-from app.services.task_identity import task_fingerprint
+from parallax_backend.models import Mission, MissionCompletionProof, MissionStatus
+from parallax_backend.services.completion import verified_proof_for
+from parallax_backend.services.task_identity import task_fingerprint
 
 _TERMINAL_NON_COMPLETED = (MissionStatus.CANCELLED, MissionStatus.REJECTED)
 
@@ -48,18 +48,22 @@ async def resolve_existing_objective(
     """
     fingerprint = task_fingerprint(prompt)
     prior = (
-        await session.execute(
-            select(Mission)
-            .options(selectinload(Mission.steps))
-            .where(
-                Mission.workspace_id == workspace_id,
-                Mission.project_id == project_id,
-                Mission.task_fingerprint == fingerprint,
+        (
+            await session.execute(
+                select(Mission)
+                .options(selectinload(Mission.steps))
+                .where(
+                    Mission.workspace_id == workspace_id,
+                    Mission.project_id == project_id,
+                    Mission.task_fingerprint == fingerprint,
+                )
+                .order_by(Mission.created_at.desc())
+                .limit(1)
             )
-            .order_by(Mission.created_at.desc())
-            .limit(1)
         )
-    ).scalars().first()
+        .scalars()
+        .first()
+    )
 
     if prior is None or prior.status in _TERMINAL_NON_COMPLETED:
         return ObjectiveResolution("new", fingerprint, None, None)

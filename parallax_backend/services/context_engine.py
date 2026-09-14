@@ -16,10 +16,10 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime
 
-from sqlalchemy import or_, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import KnowledgeFact, Mission
+from parallax_backend.models import KnowledgeFact, Mission
 
 
 @dataclass(frozen=True)

@@ -7,7 +7,9 @@ import { sessionCookies } from "@/lib/auth/constants";
 
 export { sessionCookies } from "@/lib/auth/constants";
 
-const secure = process.env.NODE_ENV === "production";
+// Docker's local HTTP stack must be able to send cookies; production can opt in
+// explicitly when served over HTTPS.
+const secure = process.env.PARALLAX_COOKIE_SECURE === "true";
 
 export async function readTokenCookies() {
   const store = await cookies();

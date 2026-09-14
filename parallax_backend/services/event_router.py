@@ -23,8 +23,8 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import AuditEvent, KnowledgeFact, Mission, MissionStatus, OutboxJob
-from app.services.missions import transition_mission
+from parallax_backend.models import AuditEvent, KnowledgeFact, Mission, MissionStatus, OutboxJob
+from parallax_backend.services.missions import transition_mission
 
 # Only events for these providers can wake missions; GitHub PR events are
 # read-only signals, the rest are state changes on mission entities.
@@ -34,7 +34,9 @@ WAKEABLE_PROVIDERS = {"github", "jira", "slack", "notion"}
 EVENT_DEDUPE_TTL = timedelta(hours=24)
 
 
-def event_identity(provider: str, event_type: str, external_id: str | None, payload: dict[str, Any]) -> str:
+def event_identity(
+    provider: str, event_type: str, external_id: str | None, payload: dict[str, Any]
+) -> str:
     """Stable identity for one external event occurrence.
 
     Replayed deliveries of the same event produce the same identity, so

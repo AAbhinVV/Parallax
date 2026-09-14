@@ -62,7 +62,14 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get the complete mission timeline */
+        /**
+         * Get the complete mission timeline
+         * @description Merged, chronological mission timeline.
+         *
+         *     Every durable trace of what happened inside one mission, in order:
+         *     status transitions, knowledge-base facts, action executions,
+         *     verifications, and approval decisions.
+         */
         get: operations["mission_timeline_api_missions__mission_id__timeline_get"];
         put?: never;
         post?: never;
@@ -504,6 +511,29 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/missions/{mission_id}/wait": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Park a mission until an external event arrives
+         * @description K4.3: a mission waiting for an external change consumes no worker.
+         *
+         *     The mission parks in WAITING_FOR_EVENT; the event router wakes it when
+         *     a matching external event arrives.
+         */
+        post: operations["wait_for_event_api_missions__mission_id__wait_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dashboard/stats": {
         parameters: {
             query?: never;
@@ -600,6 +630,29 @@ export interface paths {
         put?: never;
         /** Check an integration connection */
         post: operations["check_integration_api_integrations__provider__check_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/webhooks/{provider}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Receive an external event and wake affected missions
+         * @description External events (GitHub/Jira/Slack/Notion) wake affected missions.
+         *
+         *     Open when no webhook secret is configured (local/demo); enforced when
+         *     WEBHOOK_SECRET is set.
+         */
+        post: operations["receive_webhook_api_webhooks__provider__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1091,7 +1144,7 @@ export interface components {
          * MissionStatus
          * @enum {string}
          */
-        MissionStatus: "queued" | "planning" | "context_collected" | "waiting_for_approval" | "running" | "completed" | "blocked" | "rejected" | "cancelled" | "partially_complete" | "failed";
+        MissionStatus: "queued" | "planning" | "context_collected" | "waiting_for_approval" | "running" | "waiting_for_event" | "completed" | "blocked" | "rejected" | "cancelled" | "partially_complete" | "failed";
         /** MissionStepRead */
         MissionStepRead: {
             /**
@@ -1295,6 +1348,15 @@ export interface components {
              * Format: date-time
              */
             checked_at: string;
+        };
+        /** WebhookPayload */
+        WebhookPayload: {
+            /** Event Type */
+            event_type: string;
+            /** External Id */
+            external_id?: string | null;
+            /** Payload */
+            payload?: Record<string, never>;
         };
         /** WorkspaceRead */
         WorkspaceRead: {
@@ -3143,6 +3205,73 @@ export interface operations {
             };
         };
     };
+    wait_for_event_api_missions__mission_id__wait_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Workspace-ID"?: string | null;
+            };
+            path: {
+                mission_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MissionRead"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     stats_api_dashboard_stats_get: {
         parameters: {
             query?: never;
@@ -3494,6 +3623,43 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    receive_webhook_api_webhooks__provider__post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Webhook-Secret"?: string | null;
+            };
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookPayload"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

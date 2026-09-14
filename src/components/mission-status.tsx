@@ -10,6 +10,7 @@ const statusConfig: Record<MissionStatus, { label: string; className: string; ic
   context_collected: { label: "Context collected", className: "border-info/25 bg-info-soft text-foreground", icon: CheckCircle2 },
   waiting_for_approval: { label: "Awaiting approval", className: "border-warning/30 bg-warning-soft text-foreground", icon: ShieldQuestion },
   running: { label: "Running", className: "border-info/25 bg-info-soft text-foreground", icon: LoaderCircle },
+  waiting_for_event: { label: "Waiting for event", className: "border-warning/30 bg-warning-soft text-foreground", icon: Clock3 },
   completed: { label: "Completed", className: "border-success/25 bg-success-soft text-foreground", icon: CheckCircle2 },
   blocked: { label: "Blocked", className: "border-warning/30 bg-warning-soft text-foreground", icon: AlertTriangle },
   rejected: { label: "Rejected", className: "border-destructive/25 bg-danger-soft text-destructive", icon: Ban },

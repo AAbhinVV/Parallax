@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import uuid
 
-from app.models import (
+from parallax_backend.models import (
     KnowledgeFactKind,
     KnowledgeSource,
     Mission,
@@ -14,9 +14,13 @@ from app.models import (
     User,
     Workspace,
 )
-from app.services.connectors import CONNECTOR_CAPABILITIES, can_propose_write, capabilities_for
-from app.services.context_engine import search_context
-from app.services.knowledge import record_fact
+from parallax_backend.services.connectors import (
+    CONNECTOR_CAPABILITIES,
+    can_propose_write,
+    capabilities_for,
+)
+from parallax_backend.services.context_engine import search_context
+from parallax_backend.services.knowledge import record_fact
 
 
 async def _seed(session) -> tuple[uuid.UUID, uuid.UUID]:
